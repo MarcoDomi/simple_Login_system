@@ -4,55 +4,45 @@
 
 
 void login(){
-    //change the logic of logging in 
-    std::ifstream usernameFile;
-    std::ifstream passwordFile;
+    std::string username;
+    std::string password;
 
-    usernameFile.open("usernames.txt");
-    passwordFile.open("passwords.txt");
+    std::cout << "Enter username: ";
+    getline(std::cin, username);
 
-    bool usernameFound = false;
-    bool passwordFound = false;
+    std::cout << "Enter password: ";
+    std::cin >> password;
 
-    if(usernameFile && passwordFile){
-        std::string username;
-        std::string password;
+    std::cout << std::endl;
+    
+    username.append(".txt");
 
-        std::cout << "Enter Username: ";
-        getline(std::cin, username);
+    std::ifstream userFile;
 
-        std::cout << "Enter Password: ";
-        std::cin >> password;
+    userFile.open(username);
 
-        std::string usernameInFile;
-        while (usernameFile >> usernameInFile){
-            if(usernameInFile == username){
-                usernameFound = true;
-                break;
-            }
-        }
+    bool username_check = false;
+    bool password_check = false;
 
-        std::string pwInFile;
-        while(passwordFile >> pwInFile){
-            if(pwInFile == password){
-                passwordFound = true;
-                break;
-            }
-        }
+    if(userFile.is_open()){
+        username_check = true;
 
+        std::string pw_inFile;
 
+        userFile >> pw_inFile;
+
+        if(password == pw_inFile)
+            password_check = true;
+    }
+
+    bool login_status = username_check && password_check;
+
+    if(login_status){
+        std::cout << "Login Successful!" << std::endl;
     }
     else{
-        
-        if(!usernameFile){
-            std::cout << "ERROR: cannot find username file" << std::endl;
-        }
-        if(!passwordFile){
-            std::cout << "ERROR: cannot find password file" << std::endl;
-        }
+        std::cout << "Incorrect Username or Password" << std::endl;
     }
-    usernameFile.close();
-    passwordFile.close();
 }
 
 //TODO: IMPLEMENT INPUT VALIDATION
