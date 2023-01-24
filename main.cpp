@@ -13,6 +13,8 @@ void login(){
     std::cout << "Enter password: ";
     std::cin >> password;
 
+    std::cout << std::endl;
+    
     username.append(".txt");
 
     std::ifstream userFile;
@@ -35,10 +37,12 @@ void login(){
 
     bool login_status = username_check && password_check;
 
-    if(login_status)
+    if(login_status){
         std::cout << "Login Successful!" << std::endl;
-    else
+    }
+    else{
         std::cout << "Incorrect Username or Password" << std::endl;
+    }
 }
 
 //TODO: IMPLEMENT INPUT VALIDATION
