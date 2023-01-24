@@ -20,9 +20,12 @@ void signUp(){
         std::ofstream userfile;
         username.append(".txt");
         userfile.open(username);
+
+        userfile << password;
+        std::cout << "\nProfile Created" << std::endl;
     }
     else{
-        std::cout << "Re-entered password does not match" << std::endl;
+        std::cout << "\nERROR: Re-entered password does not match" << std::endl;
     }
 
 }
@@ -37,8 +40,6 @@ void login(){
 
     std::cout << "Enter password: ";
     std::cin >> password;
-
-    std::cout << std::endl;
     
     username.append(".txt");
 
@@ -60,13 +61,11 @@ void login(){
             password_check = true;
     }
 
-    bool login_status = username_check && password_check;
-
-    if(login_status){
-        std::cout << "Login Successful!" << std::endl;
+    if (username_check && password_check){
+        std::cout << "\nLogin Successful!" << std::endl;
     }
     else{
-        std::cout << "Incorrect Username or Password" << std::endl;
+        std::cout << "\nERROR: Incorrect Username or Password" << std::endl;
     }
 }
 
@@ -96,7 +95,7 @@ void loginSystem(){
             break;
         
         case 2:
-            std::cout << "TODO: CREATE SIGN UP\n";
+            signUp();
             break;
         
         case 3:
@@ -104,7 +103,7 @@ void loginSystem(){
             break;
 
         default:
-            std::cout << "Invalid choice" << std::endl;
+            std::cout << "\nInvalid choice" << std::endl;
         }
     }
 }
