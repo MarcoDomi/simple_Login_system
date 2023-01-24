@@ -4,55 +4,9 @@
 
 
 void login(){
-    //change the logic of logging in
-    std::ifstream usernameFile;
-    std::ifstream passwordFile;
+    
 
-    usernameFile.open("usernames.txt");
-    passwordFile.open("passwords.txt");
-
-    bool usernameFound = false;
-    bool passwordFound = false;
-
-    if(usernameFile && passwordFile){
-        std::string username;
-        std::string password;
-
-        std::cout << "Enter Username: ";
-        getline(std::cin, username);
-
-        std::cout << "Enter Password: ";
-        std::cin >> password;
-
-        std::string usernameInFile;
-        while (usernameFile >> usernameInFile){
-            if(usernameInFile == username){
-                usernameFound = true;
-                break;
-            }
-        }
-
-        std::string pwInFile;
-        while(passwordFile >> pwInFile){
-            if(pwInFile == password){
-                passwordFound = true;
-                break;
-            }
-        }
-
-
-    }
-    else{
-        
-        if(!usernameFile){
-            std::cout << "ERROR: cannot find username file" << std::endl;
-        }
-        if(!passwordFile){
-            std::cout << "ERROR: cannot find password file" << std::endl;
-        }
-    }
-    usernameFile.close();
-    passwordFile.close();
+   
 }
 
 //TODO: IMPLEMENT INPUT VALIDATION
