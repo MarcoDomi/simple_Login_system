@@ -7,8 +7,24 @@ void signUp(){
     std::string username;
     std::string password;
 
+    std::cout << "Enter your username: ";
     std::getline(std::cin, username);
-    
+    std::cout << "Enter your password: ";
+    std::cin >> password;
+
+    std::string passwordTemp;
+    std::cout << "Re-enter your password: ";
+    std::cin >> passwordTemp;
+
+    if(password == passwordTemp){
+        std::ofstream userfile;
+        username.append(".txt");
+        userfile.open(username);
+    }
+    else{
+        std::cout << "Re-entered password does not match" << std::endl;
+    }
+
 }
 
 
