@@ -2,6 +2,15 @@
 #include <string>
 #include <fstream>
 
+void signUp(){
+
+    std::string username;
+    std::string password;
+
+    std::getline(std::cin, username);
+    
+}
+
 
 void login(){
     std::string username;
