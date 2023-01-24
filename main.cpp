@@ -4,7 +4,7 @@
 
 
 void login(){
-    //change the logic of logging in
+    //change the logic of logging in 
     std::ifstream usernameFile;
     std::ifstream passwordFile;
 
