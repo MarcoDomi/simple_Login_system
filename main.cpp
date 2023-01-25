@@ -35,33 +35,33 @@ void login(){
     std::string username;
     std::string password;
 
-    std::cout << "Enter username: ";
+    std::cout << "Enter username: "; //get username from user
     getline(std::cin, username);
 
-    std::cout << "Enter password: ";
+    std::cout << "Enter password: "; //get password from user
     std::cin >> password;
     
-    username.append(".txt");
+    std::string fileName = username.append(".txt"); //append .txt extension to end of the username string to get users stored file
 
-    std::ifstream userFile;
+    std::ifstream userFile; //ifstream object used to read from a file
 
-    userFile.open(username);
+    userFile.open(fileName); //link file object with a 
 
     bool username_check = false;
     bool password_check = false;
 
-    if(userFile.is_open()){
-        username_check = true;
+    if(userFile.is_open()){//uses the entered username to check if the file actually exists
+        username_check = true; //set username check to true if a user file is found
 
-        std::string pw_inFile;
+        std::string pw_inFile; //used to store the password found in user file
 
-        userFile >> pw_inFile;
+        userFile >> pw_inFile; //stores password found in user file
 
-        if(password == pw_inFile)
-            password_check = true;
+        if(password == pw_inFile) //check if entered password is equal to password in file
+            password_check = true; // if matches then set paassword check to true;
     }
 
-    if (username_check && password_check){
+    if (username_check && password_check){ //if both username and password checks are true then print success
         std::cout << "\nLogin Successful!" << std::endl;
     }
     else{
