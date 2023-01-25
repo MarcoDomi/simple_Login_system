@@ -1,16 +1,22 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <conio.h>
 
 void signUp(){
 
     std::string username;
-    std::string password;
+    
 
     std::cout << "Enter your username: ";
     std::getline(std::cin, username);
-    std::cout << "Enter your password: ";
-    std::cin >> password;
+
+    char password[10]; //password has max length of 10
+    std::cout << "Enter your password(MAX 10 characters): ";
+    char ch;
+    int index = 0;
+    
+    //TODO: IMPLEMENT PASSWORD INPUT
 
     std::string passwordTemp;
     std::cout << "Re-enter your password: ";
