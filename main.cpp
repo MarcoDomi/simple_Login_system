@@ -13,16 +13,16 @@ void signUp(){
     std::ifstream doesFileExist(fileName); //associates filename with ifstream object
     
     if (doesFileExist.good()){ //good() checks if none of the file streams error state flags are set
-        std::cout << "\nError: username is taken" << std::endl;
+        std::cout << "\nError: username is taken" << std::endl; //if error flag is not set print message and close file
         doesFileExist.close();
-    }
+    } //when error flag is not set it means that a file with the entered username already exists which means the entered username can not be used
     else{
         std::cout << "Enter your password: ";
         std::string password;
 
         char ch;
         do{
-            ch = getch();
+            ch = getch(); //get input 
             switch (ch){
                 case 0://ignore any special characters that may get entered
                     getch();
@@ -37,12 +37,12 @@ void signUp(){
                     std::cout << std::endl;
                     break;
                 default:
-                    password += ch;
-                    std::cout << "*";
+                    password += ch; //append entered character to password string
+                    std::cout << "*";//print * to represent input on terminal
                     break;
             }
 
-        } while (ch != 13);
+        } while (ch != 13); //when ENTER/CARRIAGE RETURN is entered then exit loop
         
         std::cout << "Re-enter your password: ";
         std::string passwordTemp;
@@ -69,7 +69,7 @@ void signUp(){
             }
         } while (ch != 13);
 
-        if(password == passwordTemp){
+        if(password == passwordTemp){ //if password matches the re-entered password then write password to userfile
 
             std::ofstream userfile;
             userfile.open(fileName);
