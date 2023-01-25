@@ -7,33 +7,81 @@ void signUp(){
 
     std::string username;
     
-
     std::cout << "Enter your username: ";
     std::getline(std::cin, username);
-
-    char password[10]; //password has max length of 10
-    std::cout << "Enter your password(MAX 10 characters): ";
-    char ch;
-    int index = 0;
+    std::string fileName = username.append(".txt");
+    std::ifstream doesFileExist(fileName); //associates filename with ifstream object
     
-    //TODO: IMPLEMENT PASSWORD INPUT
-
-    std::string passwordTemp;
-    std::cout << "Re-enter your password: ";
-    std::cin >> passwordTemp;
-
-    if(password == passwordTemp){
-        std::ofstream userfile;
-        username.append(".txt");
-        userfile.open(username);
-
-        userfile << password;
-        std::cout << "\nProfile Created" << std::endl;
+    if (doesFileExist.good()){ //good() checks if none of the file streams error state flags are set
+        std::cout << "\nError: username is taken" << std::endl;
+        doesFileExist.close();
     }
     else{
-        std::cout << "\nERROR: Re-entered password does not match" << std::endl;
-    }
+        std::cout << "Enter your password: ";
+        std::string password;
 
+        char ch;
+        do{
+            ch = getch();
+            switch (ch){
+                case 0://ignore any special characters that may get entered
+                    getch();
+                    break;
+                case 8: //if getchar is equal to 8 which is ascii value of BACKSPACE
+                    if(password.length() > 0){
+                        password.erase(password.end() - 1);
+                        std::cout << ch << " " << ch; //how does this work?
+                    }
+                    break;
+                case 13: //if getchar is equal to 13 which is ascii value of ENTER/CARRIAGE RETURN
+                    std::cout << std::endl;
+                    break;
+                default:
+                    password += ch;
+                    std::cout << "*";
+                    break;
+            }
+
+        } while (ch != 13);
+        
+        std::cout << "Re-enter your password: ";
+        std::string passwordTemp;
+
+        do{
+            ch = getch();
+
+            switch(ch){
+                case 0:
+                    getch();
+                case 8:
+                    if(passwordTemp.length() > 0){
+                        passwordTemp.erase(passwordTemp.end() - 1);
+                        std::cout << ch << " " << ch;
+                    }
+                    break;
+                case 13:
+                    std::cout << std::endl;
+                    break;
+                default:
+                    passwordTemp += ch;
+                    std::cout << "*";
+                    break;
+            }
+        } while (ch != 13);
+
+        if(password == passwordTemp){
+
+            std::ofstream userfile;
+            userfile.open(fileName);
+
+            userfile << password;
+            std::cout << "\nProfile Created" << std::endl;
+            userfile.close();
+        }
+        else{
+            std::cout << "\nERROR: Re-entered password does not match" << std::endl;
+        }
+    }
 }
 
 
@@ -73,6 +121,8 @@ void login(){
     else{
         std::cout << "\nERROR: Incorrect Username or Password" << std::endl;
     }
+
+    userFile.close();
 }
 
 //TODO: IMPLEMENT INPUT VALIDATION
