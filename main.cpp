@@ -1,33 +1,87 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <conio.h>
 
 void signUp(){
 
     std::string username;
-    std::string password;
-
+    
     std::cout << "Enter your username: ";
     std::getline(std::cin, username);
-    std::cout << "Enter your password: ";
-    std::cin >> password;
-
-    std::string passwordTemp;
-    std::cout << "Re-enter your password: ";
-    std::cin >> passwordTemp;
-
-    if(password == passwordTemp){
-        std::ofstream userfile;
-        username.append(".txt");
-        userfile.open(username);
-
-        userfile << password;
-        std::cout << "\nProfile Created" << std::endl;
-    }
+    std::string fileName = username.append(".txt");
+    std::ifstream doesFileExist(fileName); //associates filename with ifstream object
+    
+    if (doesFileExist.good()){ //good() checks if none of the file streams error state flags are set
+        std::cout << "\nError: username is taken" << std::endl; //if error flag is not set print message and close file
+        doesFileExist.close();
+    } //when error flag is not set it means that a file with the entered username already exists which means the entered username can not be used
     else{
-        std::cout << "\nERROR: Re-entered password does not match" << std::endl;
-    }
+        std::cout << "Enter your password: ";
+        std::string password;
 
+        char ch;
+        do{
+            ch = getch(); //get input 
+            switch (ch){
+                case 0://ignore any special characters that may get entered
+                    getch();
+                    break;
+                case 8: //if getchar is equal to 8 which is ascii value of BACKSPACE
+                    if(password.length() > 0){
+                        password.erase(password.end() - 1);
+                        std::cout << ch << " " << ch; //how does this work?
+                    }
+                    break;
+                case 13: //if getchar is equal to 13 which is ascii value of ENTER/CARRIAGE RETURN
+                    std::cout << std::endl;
+                    break;
+                default:
+                    password += ch; //append entered character to password string
+                    std::cout << "*";//print * to represent input on terminal
+                    break;
+            }
+
+        } while (ch != 13); //when ENTER/CARRIAGE RETURN is entered then exit loop
+        
+        std::cout << "Re-enter your password: ";
+        std::string passwordTemp;
+
+        do{
+            ch = getch();
+
+            switch(ch){
+                case 0:
+                    getch();
+                case 8:
+                    if(passwordTemp.length() > 0){
+                        passwordTemp.erase(passwordTemp.end() - 1);
+                        std::cout << ch << " " << ch;
+                    }
+                    break;
+                case 13:
+                    std::cout << std::endl;
+                    break;
+                default:
+                    passwordTemp += ch;
+                    std::cout << "*";
+                    break;
+            }
+        } while (ch != 13);
+
+        if(password == passwordTemp){ //if password matches the re-entered password then write password to userfile
+
+            std::ofstream userfile;
+            userfile.open(fileName);
+
+            userfile << password;
+            std::cout << "\nProfile Created" << std::endl;
+            userfile.close();
+        }
+        else{
+            std::cout << "\nERROR: Re-entered password does not match" << std::endl;
+        }
+    }
 }
 
 
@@ -67,6 +121,8 @@ void login(){
     else{
         std::cout << "\nERROR: Incorrect Username or Password" << std::endl;
     }
+
+    userFile.close();
 }
 
 //TODO: IMPLEMENT INPUT VALIDATION
